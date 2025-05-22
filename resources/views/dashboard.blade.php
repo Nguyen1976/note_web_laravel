@@ -15,5 +15,6 @@
         </div>
     </x-slot>
 
-    @include('components.categories')
+    @include('components.categories', ['categories' => $categories, 'categoryActive' => $categoryActive])
+    @include('components.notes', ['notes' => $notes])
 </x-app-layout>
