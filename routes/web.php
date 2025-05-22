@@ -1,7 +1,10 @@
 <?php
 
+use Illuminate\Foundation\Auth\EmailVerificationRequest;
 use App\Http\Controllers\ProfileController;
 use Illuminate\Support\Facades\Route;
+use Illuminate\Http\Request;
+
 
 Route::get('/', function () {
     return view('welcome');
@@ -16,5 +19,20 @@ Route::middleware('auth')->group(function () {
     Route::patch('/profile', [ProfileController::class, 'update'])->name('profile.update');
     Route::delete('/profile', [ProfileController::class, 'destroy'])->name('profile.destroy');
 });
+
+Route::get('/email/verify', function () {
+    return view('auth.verify-email');
+})->middleware('auth')->name('verification.notice');
+
+Route::get('/email/verify/{id}/{hash}', function (EmailVerificationRequest $request) {
+    $request->fulfill(); // Xác minh thành công
+    return redirect('/dashboard'); // Điều hướng sau khi xác minh
+})->middleware(['auth', 'signed'])->name('verification.verify');
+
+Route::post('/email/verification-notification', function (Request $request) {
+    $request->user()->sendEmailVerificationNotification();
+    return back()->with('message', 'Đã gửi lại email xác minh!');
+})->middleware(['auth', 'throttle:6,1'])->name('verification.send');
+
 
 require __DIR__.'/auth.php';

@@ -25,8 +25,15 @@ class AuthenticatedSessionController extends Controller
     public function store(LoginRequest $request): RedirectResponse
     {
         $request->authenticate();
-
         $request->session()->regenerate();
+
+        if (!$request->user()->hasVerifiedEmail()) {
+            Auth::logout(); // Đăng xuất
+            return back()->withErrors([
+                'email' => 'Bạn cần xác minh email trước khi đăng nhập.',
+            ]);
+        }
+
 
         return redirect()->intended(route('dashboard', absolute: false));
     }
