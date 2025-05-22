@@ -13,7 +13,7 @@ class DashboardController extends Controller
         $user = $request->user();
 
         $categories = Category::where('user_id', $user->id)->get();
-        $notes = Note::where('user_id', $user->id)->get();
+        $notes = Note::where('user_id', $user->id)->with('category')->get();
 
         $categoryActive = null;
 
