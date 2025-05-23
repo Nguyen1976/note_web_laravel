@@ -2,17 +2,19 @@
     <div class="flex justify-center mt-10">
         <div class="w-full max-w-md">
             <form class="bg-white shadow-md rounded px-8 pt-6 pb-8 mb-4" method="post"
-                action="{{ route('notes.store') }}">
+                action="{{ route('notes.update', $note->id) }}">
                 @csrf
+                @method('PUT')
 
-                <p class="text-3xl font-black text-blue-500 text-center">New Note</p>
+                <p class="text-3xl font-black text-blue-500 text-center">Update Note</p>
                 <div class="mb-4">
                     <label class="block text-gray-700 text-sm font-bold mb-2" for="title">
                         Title
                     </label>
                     <input
                         class="shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline"
-                        id="title" name="title" type="text" placeholder="Title" value="{{ old('title') }}">
+                        id="title" name="title" type="text" placeholder="Title"
+                        value="{{ old('title', $note->title) }}">
                     @error('title')
                         <p class="text-red-500 text-xs italic mt-2">{{ $message }}</p>
                     @enderror
@@ -22,7 +24,7 @@
                         Content
                     </label>
                     <textarea name="content" id="content" cols="27" rows="4"
-                        class="shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline">{{ old('content') }}</textarea>
+                        class="shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline">{{ old('content', $note->content) }}</textarea>
                     @error('content')
                         <p class="text-red-500 text-xs italic mt-2">{{ $message }}</p>
                     @enderror
@@ -37,7 +39,8 @@
                         <option value="">-- Chọn danh mục --</option>
                         @foreach ($categories as $category)
                             <option value="{{ $category->id }}"
-                                {{ old('category_id') == $category->id ? 'selected' : '' }}>{{ $category->name }}
+                                {{ old('category_id', $note->category_id) == $category->id ? 'selected' : '' }}>
+                                {{ $category->name }}
                             </option>
                         @endforeach
                     </select>
@@ -52,7 +55,7 @@
                     <button
                         class="bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded focus:outline-none focus:shadow-outline"
                         type="submit">
-                        Create Note
+                        Update Note
                     </button>
                 </div>
 
