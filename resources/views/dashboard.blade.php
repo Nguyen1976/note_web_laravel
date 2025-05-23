@@ -18,11 +18,8 @@
             <div class="flex items-center justify-between">
                 <button class="mr-2 text-white bg-blue-500 py-2 px-3 rounded-full">
                     <a href="{{ route('notes.create') }}">
-                        Add Notes
+                        Add Note
                     </a>
-                </button>
-                <button class="mr-2 text-white bg-blue-500 py-2 px-3 rounded-full">
-                    Add Category
                 </button>
             </div>
         </div>

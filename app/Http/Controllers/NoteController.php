@@ -37,19 +37,16 @@ class NoteController extends Controller
         $validatedData = $request->validate([
             'title' => 'required|string|max:255',
             'content' => 'required|string',
-            'category_id' => 'required|integer|exists:categories,id', 
+            'category_id' => 'nullable|integer|exists:categories,id', 
         ]);
 
         $note = new Note();
         $note->title = $validatedData['title'];
         $note->content = $validatedData['content'];
-        $note->category_id = $validatedData['category_id'];
+        $note->category_id = $validatedData['category_id'] ?? null;
 
-        if (Auth::check()) {
-            $note->user_id = Auth::id();
-        } else {
-            //return về trang login
-        }
+        $note->user_id = Auth::id();
+      
 
         $note->save();
         return redirect()->route('dashboard')

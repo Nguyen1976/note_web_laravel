@@ -3,7 +3,7 @@
         @foreach ($notes as $note)
             <div class="w-full h-64 flex flex-col justify-between bg-white rounded-lg border mb-6 py-5 px-4">
                 <div class="border-l-2 pl-3 ml-1"
-                    style="border-color: {{ $note->category->color }}; color: {{ $note->category->color }}">
+                    style="border-color: {{ $note->category ? $note->category->color : 'black' }}; color: {{ $note->category ? $note->category->color : 'black' }}">
                     <h4 class="font-bold mb-3">{{ $note->title }}</h4>
                     <p class="text-sm">{{ $note->content }}</p>
                 </div>
@@ -11,7 +11,7 @@
                     <div class="mb-3 flex items-center">
                         <div class="border border-gray-300 rounded-full px-3 py-1 text-xs flex items-center"
                             aria-label="due on" role="contentinfo"
-                            style="border-color: {{ $note->category->color }}; color: {{ $note->category->color }}">
+                            style="border-color: {{ $note->category ? $note->category->color : 'black' }}; color: {{ $note->category ? $note->category->color : 'black' }}">
                             <img src="https://tuk-cdn.s3.amazonaws.com/can-uploader/4-by-3-multiple-styled-cards-svg2.svg"
                                 alt="clock" />
                             <p class="ml-2">7 Sept, 23:00</p>
@@ -21,7 +21,7 @@
                                 alt="star" />
                         </button>
                     </div>
-                    <div class="flex items-center justify-between" style="color: {{ $note->category->color }}">
+                    <div class="flex items-center justify-between" style="color: {{ $note->category ? $note->category->color : 'black' }}">
                         <p class="text-sm">March 28, 2020</p>
                         <div class="flex items-center justify-center gap-3">
 
@@ -60,7 +60,7 @@
                                                         </div>
                                                         <div class="mt-3 text-center sm:mt-0 sm:ml-4 sm:text-left">
                                                             <h3 class="text-base font-semibold text-gray-900"
-                                                                id="modal-title">Deactivate account</h3>
+                                                                id="modal-title">Delete note</h3>
                                                             <div class="mt-2">
                                                                 <p class="text-sm text-gray-500">Are you sure you want
                                                                     to deactivate your account? All of your data will be
@@ -90,12 +90,11 @@
 
                             <button
                                 class="w-8 h-8 rounded-full text-white flex items-center justify-center focus:outline-none focus:ring-2 focus:ring-offset-2  focus:ring-black"
-                                aria-label="edit note" role="button" style="background: {{ $note->category->color }}">
+                                aria-label="edit note" role="button" style="background: {{ $note->category ? $note->category->color : 'black' }}">
                                 <a href="{{ route('notes.edit', ['note' => $note->id]) }}">
                                     <img src="https://tuk-cdn.s3.amazonaws.com/can-uploader/4-by-3-multiple-styled-cards-svg1.svg"
                                         alt="edit" />
                                 </a>
-
                             </button>
                         </div>
                     </div>
