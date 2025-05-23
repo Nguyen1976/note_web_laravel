@@ -58,17 +58,33 @@ class CategoryController extends Controller
     /**
      * Show the form for editing the specified resource.
      */
-    public function edit(string $id)
+    public function edit(Category $category)
     {
-        //
+        return view('categories.edit', compact('category'));
     }
 
     /**
      * Update the specified resource in storage.
      */
-    public function update(Request $request, string $id)
+    public function update(Request $request, Category $category)
     {
-        //
+        // 1. Validate dữ liệu đầu vào từ form
+        $validatedData = $request->validate([
+            'name' => 'required|string|max:255',
+            'color' => 'required|string',
+        ]);
+
+        // 2. Cập nhật các thuộc tính của ghi chú
+        $category->name = $validatedData['name'];
+        $category->color = $validatedData['color'];
+        // user_id không cần cập nhật vì nó đã được gán khi tạo
+
+        $category->save(); // Lưu các thay đổi
+
+        // 3. Chuyển hướng người dùng với thông báo thành công
+        // Có thể chuyển hướng đến trang chi tiết ghi chú hoặc danh sách
+        return redirect()->route('dashboard')
+                         ->with('success', 'Category đã được cập nhật thành công!');
     }
 
     /**

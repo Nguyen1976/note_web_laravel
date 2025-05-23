@@ -1,6 +1,6 @@
 <x-app-layout>
     <div class="container mx-auto px-4 py-8">
-        <h1 class="text-3xl font-bold text-center mb-8"> Categories Listing</h1>
+        <h1 class="text-3xl font-bold text-center mb-8"> Reminders Listing</h1>
 
         <!-- Search and Add User (Static) -->
         <div class="flex flex-col md:flex-row justify-end items-center mb-6">
@@ -9,8 +9,8 @@
                     class="w-full px-4 py-2 rounded-md border border-gray-300 bg-white focus:outline-none focus:ring-2 focus:ring-blue-500">
             </div> --}}
             <button class="mr-2 text-white bg-blue-500 py-2 px-3 rounded-full">
-                <a href="{{ route('categories.create') }}">
-                    Add Category
+                <a href="{{ route('reminders.create') }}">
+                    Add Reminder
                 </a>
             </button>
 
@@ -124,28 +124,5 @@
                 </tbody>
             </table>
         </div>
-
-        <!-- Static Pagination -->
-        {{-- <div class="flex justify-between items-center mt-6">
-            <div>
-                <span class="text-sm text-gray-700">
-                    Showing 1 to 5 of 5 entries
-                </span>
-            </div>
-            <div class="flex space-x-2">
-                <a href="https://abhirajk.vercel.app/" target="blank">
-
-                    <button class="px-3 py-1 rounded-md bg-gray-200 text-gray-700 opacity-50">
-                        Previous
-                    </button>
-                </a>
-                <a href="https://abhirajk.vercel.app/" target="blank">
-
-                    <button class="px-3 py-1 rounded-md bg-gray-200 text-gray-700 opacity-50">
-                        Next
-                    </button>
-                </a>
-            </div>
-        </div> --}}
     </div>
 </x-app-layout>

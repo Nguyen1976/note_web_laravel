@@ -13,12 +13,9 @@ return new class extends Migration
     {
         Schema::create('reminders', function (Blueprint $table) {
             $table->id();
-            $table->unsignedBigInteger('note_id')->unique(); // 1 reminder chỉ thuộc 1 note duy nhất
             $table->timestamp('reminder_at');
             $table->boolean('sent')->default(false);
             $table->timestamps();
-
-            $table->foreign('note_id')->references('id')->on('notes')->onDelete('cascade');
         });
     }
 

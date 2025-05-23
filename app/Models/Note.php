@@ -6,7 +6,7 @@ use Illuminate\Database\Eloquent\Model;
 
 class Note extends Model
 {
-    protected $fillable = ['title', 'content', 'user_id', 'category_id'];
+    protected $fillable = ['title', 'content', 'user_id', 'category_id', 'reminder_id'];
 
     public function user()
     {
@@ -20,6 +20,6 @@ class Note extends Model
 
     public function reminder()
     {
-        return $this->hasOne(Reminder::class);
+        return $this->belongsTo(Reminder::class);
     }
 }

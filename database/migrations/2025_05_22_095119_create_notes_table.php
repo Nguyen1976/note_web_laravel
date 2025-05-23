@@ -14,13 +14,15 @@ return new class extends Migration
         Schema::create('notes', function (Blueprint $table) {
             $table->id();
             $table->unsignedBigInteger('user_id');
-            $table->unsignedBigInteger('category_id')->nullable();;
+            $table->unsignedBigInteger('category_id')->nullable();
+            $table->unsignedBigInteger('reminder_id')->nullable();
             $table->string('title');
             $table->text('content');
             $table->timestamps();
 
             $table->foreign('user_id')->references('id')->on('users')->onDelete('cascade');
             $table->foreign('category_id')->references('id')->on('categories')->onDelete('set null');
+            $table->foreign('reminder_id')->references('id')->on('reminders')->onDelete('set null');
         });
     }
 
