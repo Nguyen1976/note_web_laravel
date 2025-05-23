@@ -13,7 +13,7 @@ class DashboardController extends Controller
         $user = $request->user();
 
         $categories = Category::where('user_id', $user->id)->get();
-        $notes = Note::where('user_id', $user->id)->with('category')->get();
+        $notes = Note::where('user_id', $user->id)->with('category')->with('reminder')->get();
 
         $categoryActive = null;
 
@@ -28,6 +28,7 @@ class DashboardController extends Controller
         $notes = Note::where('user_id', $user->id)
                     ->where('category_id', $id)
                     ->with('category')
+                    ->with('reminder')
                     ->get();
 
         $categoryActive = $id;//Biến này sử dụng để hiểu thị màu khi category được active tức là ví dụ không truyền categoryActive thì all Note sẽ có bg

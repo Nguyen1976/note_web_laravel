@@ -11,7 +11,7 @@ class ReminderController extends Controller
      */
     public function index()
     {
-        //
+        
     }
 
     /**
