@@ -43,7 +43,7 @@ class ReminderController extends Controller
 
         $reminder->save();
         return redirect()->route('reminders.index')
-                         ->with('success', 'Reminder đã được tạo thành công!');
+                         ->with('success', 'Reminder created successfully!');
     }
 
     /**
@@ -77,7 +77,7 @@ class ReminderController extends Controller
 
         $reminder->save(); // Lưu các thay đổi
         return redirect()->route('reminders.index')
-                         ->with('success', 'Reminder đã được cập nhật thành công!');
+                         ->with('success', 'Reminder has been updated successfully.!');
     }
 
     /**
@@ -90,6 +90,6 @@ class ReminderController extends Controller
 
         // 3. Chuyển hướng người dùng với thông báo thành công
         return redirect()->route('reminders.index')
-                         ->with('success', 'Reminder đã được xóa thành công!');
+                         ->with('success', 'Reminder has been deleted successfully.!');
     }
 }

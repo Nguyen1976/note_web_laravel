@@ -44,7 +44,7 @@ class CategoryController extends Controller
 
         $category->save();
         return redirect()->route('categories.index')
-                         ->with('success', 'Category đã được tạo thành công!');
+                         ->with('success', 'Category created successfully!');
     }
 
     /**
@@ -84,7 +84,7 @@ class CategoryController extends Controller
         // 3. Chuyển hướng người dùng với thông báo thành công
         // Có thể chuyển hướng đến trang chi tiết ghi chú hoặc danh sách
         return redirect()->route('dashboard')
-                         ->with('success', 'Category đã được cập nhật thành công!');
+                         ->with('success', 'Category has been updated successfully!');
     }
 
     /**
@@ -97,6 +97,6 @@ class CategoryController extends Controller
 
         // 3. Chuyển hướng người dùng với thông báo thành công
         return redirect()->route('categories.index')
-                         ->with('success', 'Ghi chú đã được xóa thành công!');
+                         ->with('success', 'Category was deleted successfully!');
     }
 }
