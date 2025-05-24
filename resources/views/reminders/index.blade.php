@@ -111,14 +111,9 @@
                                                                     class="mt-3 text-center sm:mt-0 sm:ml-4 sm:text-left">
                                                                     <h3 class="text-base font-semibold text-gray-900"
                                                                         id="modal-title">
-                                                                        Delete reminder</h3>
+                                                                        Delete reminder?</h3>
                                                                     <div class="mt-2">
-                                                                        <p class="text-sm text-gray-500">Are you sure
-                                                                            you want
-                                                                            to deactivate your account? All of your data
-                                                                            will be
-                                                                            permanently removed. This action cannot be
-                                                                            undone.
+                                                                        <p class="text-sm text-gray-500">Are you sure you want to delete this reminder? This action is permanent and cannot be undone.
                                                                         </p>
                                                                     </div>
                                                                 </div>

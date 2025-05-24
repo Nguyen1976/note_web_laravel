@@ -40,7 +40,7 @@ class NoteController extends Controller
             'title' => 'required|string|max:255',
             'content' => 'required|string',
             'category_id' => 'nullable|integer|exists:categories,id', 
-            'reminder_id' => 'nullable|integer|exists:categories,id', 
+            'reminder_id' => 'nullable|integer|exists:reminders,id', 
         ]);
 
         $note = new Note();
@@ -77,8 +77,9 @@ class NoteController extends Controller
         }
 
         $categories = Category::where('user_id', $note->user_id)->get();
+        $reminders = Reminder::where('user_id', $note->user_id)->where('sent', false)->get();
         
-        return view('notes.edit', compact('note', 'categories'));
+        return view('notes.edit', compact('note', 'categories', 'reminders'));
     }
 
     /**
@@ -95,12 +96,14 @@ class NoteController extends Controller
             ],
             'content' => 'required|string',
             'category_id' => 'nullable|integer|exists:categories,id',
+            'reminder_id' => 'nullable|integer|exists:reminders,id',
         ]);
 
         // 2. Cập nhật các thuộc tính của ghi chú
         $note->title = $validatedData['title'];
         $note->content = $validatedData['content'];
         $note->category_id = $validatedData['category_id'];
+        $note->reminder_id = $validatedData['reminder_id'];
         // user_id không cần cập nhật vì nó đã được gán khi tạo
 
         $note->save(); // Lưu các thay đổi
