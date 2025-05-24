@@ -3,25 +3,34 @@
 namespace App\Mail;
 
 use App\Models\Note;
+use App\Models\Reminder;
+use App\Models\User;
 use Illuminate\Bus\Queueable;
 use Illuminate\Contracts\Queue\ShouldQueue;
 use Illuminate\Mail\Mailable;
 use Illuminate\Mail\Mailables\Content;
 use Illuminate\Mail\Mailables\Envelope;
 use Illuminate\Queue\SerializesModels;
+use Illuminate\Support\Collection;
 
 class NoteReminderMail extends Mailable
 {
     use Queueable, SerializesModels;
 
-    public Note $note;
+    public User $user;
+    public Collection $notes;
+    public Reminder $reminder;
+
+
 
     /**
      * Create a new message instance.
      */
-    public function __construct(Note $note)
+    public function __construct(User $user, Collection $notes, Reminder $reminder)
     {
-        $this->note = $note;
+        $this->user = $user;
+        $this->notes = $notes;
+        $this->reminder = $reminder;
     }
 
     /**
@@ -30,7 +39,8 @@ class NoteReminderMail extends Mailable
     public function envelope(): Envelope
     {
         return new Envelope(
-            subject: 'Nhắc nhở: ' . $this->note->title,
+            subject: 'Bạn có các ghi chú cần được nhắc nhở!',
+
         );
     }
 
@@ -40,7 +50,7 @@ class NoteReminderMail extends Mailable
     public function content(): Content
     {
         return new Content(
-            view: 'emails.notes.reminder', 
+            view: 'emails.notes.reminder',
         );
     }
 

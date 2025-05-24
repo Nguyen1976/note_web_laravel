@@ -23,7 +23,7 @@ class SendNoteReminders extends Command
      *
      * @var string
      */
-    protected $description = 'Kiểm tra và gửi email nhắc nhở cho các ghi chú đến hạn';
+        protected $description = 'Kiểm tra và gửi email nhắc nhở (tổng hợp cho user của reminder) đến hạn';
 
     /**
      * Execute the console command.
@@ -32,46 +32,52 @@ class SendNoteReminders extends Command
      */
     public function handle()
     {
+        Log::info('SendNoteReminders Command: Bắt đầu thực thi.');
         $now = Carbon::now();
 
-        // Lấy tất cả các reminders chưa được gửi và đã đến hạn
-        $dueReminders = Reminder::with(['notes', 'notes.user'])
-            ->where('reminder_at', '<=', $now)
-            ->where('sent', false) // <<< SỬA Ở ĐÂY: Chỉ lấy những reminder có 'sent' là false
+        $dueReminders = Reminder::with([
+            'user',
+            'notes.category' // Tải các notes và category của từng note
+        ])->where('reminder_at', '<=', $now)
+            ->where('sent', false)
             ->get();
 
         if ($dueReminders->isEmpty()) {
-            Log::info('Không có nhắc nhở nào đến hạn hoặc chưa được gửi.');
             return Command::SUCCESS;
         }
 
         foreach ($dueReminders as $reminder) {
-            $allNotesForThisReminderSent = true; // Giả định tất cả note sẽ được gửi thành công
+            Log::info("SendNoteReminders Command: Đang xử lý Reminder ID: {$reminder->id} cho User ID: {$reminder->user->id} (Thời gian nhắc: {$reminder->reminder_at->toDateTimeString()})");
 
-            foreach ($reminder->notes as $note) {
-                if ($note->user) {
-                    try {
-                        Mail::to($note->user->email)->send(new NoteReminderMail($note));
-                        Log::info("Đã gửi email nhắc nhở cho note '{$note->title}' đến {$note->user->email}.");
-                    } catch (\Exception $e) {
-                        $allNotesForThisReminderSent = false; // Nếu có lỗi, không đánh dấu là đã gửi
-                        Log::error("Lỗi khi gửi email cho note '{$note->title}': " . $e->getMessage());
-                    }
-                } else {
-                    Log::warning("Note ID {$note->id} không có user liên kết, bỏ qua.");
-                }
+            // User nhận mail chính là $reminder->user
+            $userToSendTo = $reminder->user;
+
+            // Tất cả các notes của reminder này (đã có category)
+            $allNotesForThisReminder = $reminder->notes;
+
+            if ($allNotesForThisReminder->isEmpty()) {
+                Log::info("SendNoteReminders Command: Reminder ID {$reminder->id} không có notes nào để gửi cho User ID {$userToSendTo->id}. Đánh dấu là đã xử lý.");
+                $reminder->delete();
+                $reminder->save();
+                continue; // Chuyển sang reminder tiếp theo
             }
 
-            if ($allNotesForThisReminderSent) {
-                $reminder->sent = true; 
+            $emailSentSuccessfully = true;
+            try {
+                Mail::to($userToSendTo->email)->send(new NoteReminderMail($userToSendTo, $allNotesForThisReminder, $reminder));
+            } catch (\Exception $e) {
+                $emailSentSuccessfully = false;
+            }
+
+            if ($emailSentSuccessfully) {
+                $reminder->delete();
                 $reminder->save();
-                $this->info("Đã xử lý xong và đánh dấu đã gửi cho nhắc nhở ID: {$reminder->id}.");
             } else {
-                Log::error("Có lỗi xảy ra khi gửi email cho một số note của nhắc nhở ID: {$reminder->id}. Nhắc nhở này sẽ được thử lại lần sau.");
+                Log::error("SendNoteReminders Command: Có lỗi xảy ra khi gửi email cho Reminder ID: {$reminder->id}. Nhắc nhở này sẽ được thử lại lần sau.");
             }
         }
 
-        Log::info('Hoàn tất việc gửi nhắc nhở.');
+        Log::info('SendNoteReminders Command: Hoàn tất việc kiểm tra và gửi nhắc nhở.');
         return Command::SUCCESS;
     }
 }

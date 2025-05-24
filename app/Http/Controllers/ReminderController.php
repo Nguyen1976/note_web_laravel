@@ -67,15 +67,13 @@ class ReminderController extends Controller
      */
     public function update(Request $request, Reminder $reminder)
     {
-         // 1. Validate dữ liệu đầu vào từ form
          $validatedData = $request->validate([
             'reminder_at' => 'required|date',
         ]);
 
-        // 2. Cập nhật các thuộc tính của ghi chú
         $reminder->reminder_at = $validatedData['reminder_at'];
 
-        $reminder->save(); // Lưu các thay đổi
+        $reminder->save(); 
         return redirect()->route('reminders.index')
                          ->with('success', 'Reminder has been updated successfully.!');
     }
@@ -85,10 +83,8 @@ class ReminderController extends Controller
      */
    public function destroy(Reminder $reminder)
     {
-        // 2. Xóa ghi chú
         $reminder->delete();
 
-        // 3. Chuyển hướng người dùng với thông báo thành công
         return redirect()->route('reminders.index')
                          ->with('success', 'Reminder has been deleted successfully.!');
     }

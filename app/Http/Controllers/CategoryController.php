@@ -68,21 +68,16 @@ class CategoryController extends Controller
      */
     public function update(Request $request, Category $category)
     {
-        // 1. Validate dữ liệu đầu vào từ form
         $validatedData = $request->validate([
             'name' => 'required|string|max:255',
             'color' => 'required|string',
         ]);
 
-        // 2. Cập nhật các thuộc tính của ghi chú
         $category->name = $validatedData['name'];
         $category->color = $validatedData['color'];
-        // user_id không cần cập nhật vì nó đã được gán khi tạo
 
-        $category->save(); // Lưu các thay đổi
+        $category->save(); 
 
-        // 3. Chuyển hướng người dùng với thông báo thành công
-        // Có thể chuyển hướng đến trang chi tiết ghi chú hoặc danh sách
         return redirect()->route('dashboard')
                          ->with('success', 'Category has been updated successfully!');
     }
@@ -92,10 +87,8 @@ class CategoryController extends Controller
      */
     public function destroy(Category $category)
     {
-        // 2. Xóa ghi chú
         $category->delete();
 
-        // 3. Chuyển hướng người dùng với thông báo thành công
         return redirect()->route('categories.index')
                          ->with('success', 'Category was deleted successfully!');
     }

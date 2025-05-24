@@ -34,8 +34,6 @@ class NoteController extends Controller
      */
     public function store(Request $request)
     {
-        // dd($request);
-        // 1. Validate dữ liệu đầu vào từ form
         $validatedData = $request->validate([
             'title' => 'required|string|max:255',
             'content' => 'required|string',
@@ -71,6 +69,7 @@ class NoteController extends Controller
     public function edit(Note $note)
     {
         $categories = Category::where('user_id', $note->user_id)->get();
+        $reminders = Reminder::where('user_id', $note->user_id)->get();
         
         return view('notes.edit', compact('note', 'categories', 'reminders'));
     }
@@ -80,7 +79,6 @@ class NoteController extends Controller
      */
     public function update(Request $request, Note $note)
     {
-        // 1. Validate dữ liệu đầu vào từ form
         $validatedData = $request->validate([
             'title' => [
                 'required',
@@ -97,12 +95,10 @@ class NoteController extends Controller
         $note->content = $validatedData['content'];
         $note->category_id = $validatedData['category_id'];
         $note->reminder_id = $validatedData['reminder_id'];
-        // user_id không cần cập nhật vì nó đã được gán khi tạo
 
-        $note->save(); // Lưu các thay đổi
+        $note->save(); 
 
-        // 3. Chuyển hướng người dùng với thông báo thành công
-        // Có thể chuyển hướng đến trang chi tiết ghi chú hoặc danh sách
+     
         return redirect()->route('dashboard')
                          ->with('success', 'Note has been updated successfully!');
     }
@@ -114,7 +110,6 @@ class NoteController extends Controller
     {
         $note->delete();
 
-        // 3. Chuyển hướng người dùng với thông báo thành công
         return redirect()->route('dashboard')
                          ->with('success', 'Note deleted successfully!');
     }
