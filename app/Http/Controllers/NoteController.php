@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use App\Models\Category;
 use App\Models\Note;
+use App\Models\Reminder;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Http\Request;
 
@@ -24,7 +25,8 @@ class NoteController extends Controller
     {   
         $user = $request->user();
         $categories = Category::where('user_id', $user->id)->get();
-        return view('notes.create', compact('categories'));
+        $reminders = Reminder::where('user_id', $user->id)->get();
+        return view('notes.create', compact('categories', 'reminders'));
     }
 
     /**
@@ -38,12 +40,14 @@ class NoteController extends Controller
             'title' => 'required|string|max:255',
             'content' => 'required|string',
             'category_id' => 'nullable|integer|exists:categories,id', 
+            'reminder_id' => 'nullable|integer|exists:categories,id', 
         ]);
 
         $note = new Note();
         $note->title = $validatedData['title'];
         $note->content = $validatedData['content'];
         $note->category_id = $validatedData['category_id'] ?? null;
+        $note->reminder_id = $validatedData['reminder_id'] ?? null;
 
         $note->user_id = Auth::id();
       
@@ -90,7 +94,7 @@ class NoteController extends Controller
                 'max:255'
             ],
             'content' => 'required|string',
-            'category_id' => 'required|integer|exists:categories,id',
+            'category_id' => 'nullable|integer|exists:categories,id',
         ]);
 
         // 2. Cập nhật các thuộc tính của ghi chú

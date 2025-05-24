@@ -1,4 +1,15 @@
 <x-app-layout>
+    @if (session('success'))
+        <script>
+            alert("{{ session('success') }}");
+        </script>
+    @endif
+
+    @if (session('error'))
+        <script>
+            alert("{{ session('error') }}");
+        </script>
+    @endif
     <div class="container mx-auto px-4 py-8">
         <h1 class="text-3xl font-bold text-center mb-8"> Categories Listing</h1>
 

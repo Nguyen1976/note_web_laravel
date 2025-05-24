@@ -1,4 +1,15 @@
 <x-app-layout>
+    @if (session('success'))
+        <script>
+            alert("{{ session('success') }}");
+        </script>
+    @endif
+
+    @if (session('error'))
+        <script>
+            alert("{{ session('error') }}");
+        </script>
+    @endif
     <div class="container mx-auto px-4 py-8">
         <h1 class="text-3xl font-bold text-center mb-8"> Reminders Listing</h1>
 
@@ -21,22 +32,37 @@
             <table class="w-full table-auto">
                 <thead>
                     <tr class="bg-gray-200 text-gray-600 uppercase text-sm leading-normal">
-                        <th class="py-3 px-6 text-left">Name</th>
-                        <th class="py-3 px-6 text-left">Color</th>
+                        <th class="py-3 px-6 text-left">Date</th>
+                        <th class="py-3 px-6 text-left">Sent</th>
                         <th class="py-3 px-6 text-center">Actions</th>
                     </tr>
                 </thead>
                 <tbody class="text-gray-600 text-sm">
-                    @foreach ($categories as $category)
+                    @foreach ($reminders as $reminder)
                         <tr class="border-b border-gray-200 hover:bg-gray-100">
-                            <td class="py-3 px-6 text-left">{{ $category->name }}</td>
                             <td class="py-3 px-6 text-left">
-                                <button class="w-5 h-5 rounded-md" style="background: {{ $category->color }}"></button>
+                                {{ $reminder->reminder_at->locale('en')->translatedFormat('F j, H:i') }}</td>
+                            <td class="py-3 px-6 text-left">
+                                <p>
+                                    @if ($reminder->sent)
+                                        <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24"
+                                            stroke-width="1.5" stroke="currentColor" class="size-6">
+                                            <path stroke-linecap="round" stroke-linejoin="round"
+                                                d="M14.857 17.082a23.848 23.848 0 0 0 5.454-1.31A8.967 8.967 0 0 1 18 9.75V9A6 6 0 0 0 6 9v.75a8.967 8.967 0 0 1-2.312 6.022c1.733.64 3.56 1.085 5.455 1.31m5.714 0a24.255 24.255 0 0 1-5.714 0m5.714 0a3 3 0 1 1-5.714 0M3.124 7.5A8.969 8.969 0 0 1 5.292 3m13.416 0a8.969 8.969 0 0 1 2.168 4.5" />
+                                        </svg>
+                                    @else
+                                        <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24"
+                                            stroke-width="1.5" stroke="currentColor" class="size-6">
+                                            <path stroke-linecap="round" stroke-linejoin="round"
+                                                d="M14.857 17.082a23.848 23.848 0 0 0 5.454-1.31A8.967 8.967 0 0 1 18 9.75V9A6 6 0 0 0 6 9v.75a8.967 8.967 0 0 1-2.312 6.022c1.733.64 3.56 1.085 5.455 1.31m5.714 0a24.255 24.255 0 0 1-5.714 0m5.714 0a3 3 0 1 1-5.714 0M10.5 8.25h3l-3 4.5h3" />
+                                        </svg>
+                                    @endif
+                                </p>
                             </td>
                             <td class="py-3 px-6 text-center">
                                 <div class="flex item-center justify-center">
                                     <button class="w-4 mr-2 transform hover:text-blue-500 hover:scale-110">
-                                        <a href="{{ route('categories.edit', $category->id) }}">
+                                        <a href="{{ route('reminders.edit', $reminder->id) }}">
                                             <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24"
                                                 stroke="currentColor">
                                                 <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
@@ -85,7 +111,7 @@
                                                                     class="mt-3 text-center sm:mt-0 sm:ml-4 sm:text-left">
                                                                     <h3 class="text-base font-semibold text-gray-900"
                                                                         id="modal-title">
-                                                                        Delete category</h3>
+                                                                        Delete reminder</h3>
                                                                     <div class="mt-2">
                                                                         <p class="text-sm text-gray-500">Are you sure
                                                                             you want
@@ -101,7 +127,7 @@
                                                         <div
                                                             class="bg-gray-50 px-4 py-3 sm:flex sm:flex-row-reverse sm:px-6">
                                                             <form
-                                                                action="{{ route('categories.destroy', $category->id) }}"
+                                                                action="{{ route('reminders.destroy', $reminder->id) }}"
                                                                 method="post">
                                                                 @csrf
                                                                 @method('DELETE')

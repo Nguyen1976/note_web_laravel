@@ -45,6 +45,23 @@
                         <p class="text-red-500 text-xs italic mt-2">{{ $message }}</p>
                     @enderror
                 </div>
+
+                <div class="mb-4">
+                    <label for="reminder_id" class="block text-gray-700 text-sm font-bold mb-2">Select a
+                        reminder</label>
+                    <select id="reminder_id" name="reminder_id"
+                        class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5">
+                        <option value="">-- Chọn danh mục --</option>
+                        @foreach ($reminders as $reminder)
+                            <option value="{{ $reminder->id }}"
+                                {{ old('reminder_id') == $reminder->id ? 'selected' : '' }}>{{ $reminder->reminder_at }}
+                            </option>
+                        @endforeach
+                    </select>
+                    @error('reminder_id')
+                        <p class="text-red-500 text-xs italic mt-2">{{ $message }}</p>
+                    @enderror
+                </div>
                 {{-- End drop down --}}
 
 

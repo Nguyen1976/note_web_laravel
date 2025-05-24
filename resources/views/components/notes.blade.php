@@ -20,10 +20,10 @@
                             </div>
                         @endif
                         {{-- Reminder end --}}
-                        <button class="p-1 rounded-full ml-2" aria-label="save in starred items" role="button">
+                        {{-- <button class="p-1 rounded-full ml-2" aria-label="save in starred items" role="button">
                             <img src="https://tuk-cdn.s3.amazonaws.com/can-uploader/4-by-3-multiple-styled-cards-svg3.svg"
                                 alt="star" />
-                        </button>
+                        </button> --}}
                     </div>
                     <div class="flex items-center justify-between"
                         style="color: {{ $note->category ? $note->category->color : 'black' }}">
