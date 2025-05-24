@@ -30,7 +30,7 @@
                     @enderror
                 </div>
 
-                {{-- drop down category and reminder --}}
+                {{-- drop down category --}}
                 <div class="mb-4">
                     <label for="category_id" class="block text-gray-700 text-sm font-bold mb-2">Select a
                         category</label>

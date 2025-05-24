@@ -16,7 +16,8 @@
                                 style="border-color: {{ $note->category ? $note->category->color : 'black' }}; color: {{ $note->category ? $note->category->color : 'black' }}">
                                 <img src="https://tuk-cdn.s3.amazonaws.com/can-uploader/4-by-3-multiple-styled-cards-svg2.svg"
                                     alt="clock" />
-                                <p class="ml-2">{{ $note->reminder->reminder_at->locale('en')->translatedFormat('F j, H:i') }}</p>
+                                <p class="ml-2">
+                                    {{ $note->reminder->reminder_at->locale('en')->translatedFormat('F j, H:i') }}</p>
                             </div>
                         @endif
                         {{-- Reminder end --}}
@@ -65,11 +66,11 @@
                                                         </div>
                                                         <div class="mt-3 text-center sm:mt-0 sm:ml-4 sm:text-left">
                                                             <h3 class="text-base font-semibold text-gray-900"
-                                                                id="modal-title">Delete note</h3>
+                                                                id="modal-title">Delete note?</h3>
                                                             <div class="mt-2">
                                                                 <p class="text-sm text-gray-500">Are you sure you want
-                                                                    to deactivate your account? All of your data will be
-                                                                    permanently removed. This action cannot be undone.
+                                                                    to delete this note? This action is permanent and
+                                                                    cannot be undone.
                                                                 </p>
                                                             </div>
                                                         </div>

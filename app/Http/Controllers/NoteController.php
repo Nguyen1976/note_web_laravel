@@ -71,7 +71,6 @@ class NoteController extends Controller
     public function edit(Note $note)
     {
         $categories = Category::where('user_id', $note->user_id)->get();
-        $reminders = Reminder::where('user_id', $note->user_id)->get();
         
         return view('notes.edit', compact('note', 'categories', 'reminders'));
     }
