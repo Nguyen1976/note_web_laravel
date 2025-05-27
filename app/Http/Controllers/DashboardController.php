@@ -10,28 +10,36 @@ class DashboardController extends Controller
 {
     public function index(Request $request)
     {
-        $user = $request->user();
-
-        $categories = Category::where('user_id', $user->id)->get();
-        $notes = Note::where('user_id', $user->id)->with('category')->with('reminder')->get();
-
-        $categoryActive = null;
-
-        return view('dashboard', compact('categories', 'notes', 'categoryActive'));
+        try {
+            $user = $request->user();
+    
+            $categories = Category::where('user_id', $user->id)->get();
+            $notes = Note::where('user_id', $user->id)->with('category')->with('reminder')->get();
+    
+            $categoryActive = null;
+    
+            return view('dashboard', compact('categories', 'notes', 'categoryActive'));
+        } catch (\Exception $e) {
+            throw $e; 
+        }
     }
 
     public function filterByCategory(Request $request, $id)
     {
-        $user = $request->user();
-        $categories = Category::where('user_id', $user->id)->get();
-
-        $notes = Note::where('user_id', $user->id)
-                    ->where('category_id', $id)
-                    ->with('category')
-                    ->with('reminder')
-                    ->get();
-
-        $categoryActive = $id;//Biến này sử dụng để hiểu thị màu khi category được active tức là ví dụ không truyền categoryActive thì all Note sẽ có bg
-        return view('dashboard', compact('categories', 'notes', 'categoryActive'));
+        try {
+            $user = $request->user();
+            $categories = Category::where('user_id', $user->id)->get();
+    
+            $notes = Note::where('user_id', $user->id)
+                        ->where('category_id', $id)
+                        ->with('category')
+                        ->with('reminder')
+                        ->get();
+    
+            $categoryActive = $id;
+            return view('dashboard', compact('categories', 'notes', 'categoryActive'));
+        } catch (\Exception $e) {
+            throw $e; 
+        }
     }
 }

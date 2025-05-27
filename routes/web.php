@@ -6,9 +6,11 @@ use App\Http\Controllers\NoteController;
 use Illuminate\Foundation\Auth\EmailVerificationRequest;
 use App\Http\Controllers\ProfileController;
 use App\Http\Controllers\ReminderController;
+use App\Models\Note;
+use Illuminate\Console\View\Components\Alert;
 use Illuminate\Support\Facades\Route;
 use Illuminate\Http\Request;
-
+use RealRashid\SweetAlert\Facades\Alert as FacadesAlert;
 
 Route::get('/', function () {
     return view('welcome');
@@ -49,3 +51,15 @@ Route::post('/email/verification-notification', function (Request $request) {
 })->middleware(['auth', 'throttle:6,1'])->name('verification.send');
 //End
 require __DIR__.'/auth.php';
+
+
+
+//Test xử lý lỗi tập trung
+// Route::get('/test-model-not-found', function () {
+//     try {
+//         $note = Note::findOrFail(999999); 
+//         return "Tìm thấy ghi chú: " . $note->title;
+//     } catch (\Exception $e) {
+//         throw $e; 
+//     }
+// });

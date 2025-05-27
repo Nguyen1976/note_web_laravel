@@ -5,6 +5,7 @@ namespace App\Http\Controllers;
 use App\Models\Reminder;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
+use RealRashid\SweetAlert\Facades\Alert;
 
 class ReminderController extends Controller
 {
@@ -13,9 +14,13 @@ class ReminderController extends Controller
      */
     public function index(Request $request)
     {   
-        $user = $request->user();
-        $reminders = Reminder::where('user_id', $user->id)->get();
-        return view('reminders.index', compact('reminders'));
+        try {
+            $user = $request->user();
+            $reminders = Reminder::where('user_id', $user->id)->get();
+            return view('reminders.index', compact('reminders'));
+        } catch (\Exception $e) {
+            throw $e; 
+        }
     }
 
     /**
@@ -31,19 +36,24 @@ class ReminderController extends Controller
      */
     public function store(Request $request)
     {
-        $validatedData = $request->validate([
-            'reminder_at' => 'required|date',
-        ]);
-
-
-        $reminder = new Reminder();
-        $reminder->reminder_at = $validatedData['reminder_at'];
-        $reminder->sent = false;
-        $reminder->user_id = Auth::id();
-
-        $reminder->save();
-        return redirect()->route('reminders.index')
-                         ->with('success', 'Reminder created successfully!');
+        try {
+            $validatedData = $request->validate([
+                'reminder_at' => 'required|date',
+            ]);
+    
+    
+            $reminder = new Reminder();
+            $reminder->reminder_at = $validatedData['reminder_at'];
+            $reminder->sent = false;
+            $reminder->user_id = Auth::id();
+    
+            $reminder->save();
+    
+            Alert::success('Success', 'Reminder created successfully!');
+            return redirect()->route('reminders.index');
+        } catch (\Exception $e) {
+            throw $e; 
+        }
     }
 
     /**
@@ -67,15 +77,21 @@ class ReminderController extends Controller
      */
     public function update(Request $request, Reminder $reminder)
     {
-         $validatedData = $request->validate([
-            'reminder_at' => 'required|date',
-        ]);
+        try {
+            $validatedData = $request->validate([
+               'reminder_at' => 'required|date',
+           ]);
+    
+           $reminder->reminder_at = $validatedData['reminder_at'];
+    
+           $reminder->save(); 
+    
+           Alert::success('Success', 'Reminder updated successfully!');
+           return redirect()->route('reminders.index');
+        } catch (\Exception $e) {
+            throw $e;
+        }
 
-        $reminder->reminder_at = $validatedData['reminder_at'];
-
-        $reminder->save(); 
-        return redirect()->route('reminders.index')
-                         ->with('success', 'Reminder has been updated successfully.!');
     }
 
     /**
@@ -83,9 +99,14 @@ class ReminderController extends Controller
      */
    public function destroy(Reminder $reminder)
     {
-        $reminder->delete();
-
-        return redirect()->route('reminders.index')
-                         ->with('success', 'Reminder has been deleted successfully.!');
+        try {
+            $reminder->delete();
+    
+            Alert::success('Success', 'Reminder deleted successfully!');
+    
+            return redirect()->route('reminders.index');
+        } catch (\Exception $e) {
+            throw $e; 
+        }
     }
 }

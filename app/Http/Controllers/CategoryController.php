@@ -5,6 +5,7 @@ namespace App\Http\Controllers;
 use App\Models\Category;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
+use RealRashid\SweetAlert\Facades\Alert;
 
 class CategoryController extends Controller
 {
@@ -13,10 +14,14 @@ class CategoryController extends Controller
      */
     public function index(Request $request)
     {   
-        $user = $request->user();
-
-        $categories = Category::where('user_id', $user->id)->get();
-        return view('categories.index', compact('categories'));
+        try {
+            $user = $request->user();
+            $categories = Category::where('user_id', $user->id)->get();
+            return view('categories.index', compact('categories'));
+        } catch (\Exception $e) {
+            throw $e;
+        }
+        
     }
 
     /**
@@ -32,19 +37,25 @@ class CategoryController extends Controller
      */
     public function store(Request $request)
     {
-        $validatedData = $request->validate([
-            'name' => 'required|string|max:255',
-            'color' => 'required|string',
-        ]);
+        try {
+            $validatedData = $request->validate([
+                'name' => 'required|string|max:255',
+                'color' => 'required|string',
+            ]);
 
-        $category = new Category();
-        $category->name = $validatedData['name'];
-        $category->color = $validatedData['color'];
-        $category->user_id = Auth::id();
+            $category = new Category();
+            $category->name = $validatedData['name'];
+            $category->color = $validatedData['color'];
+            $category->user_id = Auth::id();
 
-        $category->save();
-        return redirect()->route('categories.index')
-                         ->with('success', 'Category created successfully!');
+            $category->save();
+
+            Alert::success('Success', 'Category created successfully!');
+            return redirect()->route('categories.index');
+        } catch (\Exception $e) {
+            throw $e;
+        }
+        
     }
 
     /**
@@ -68,18 +79,24 @@ class CategoryController extends Controller
      */
     public function update(Request $request, Category $category)
     {
-        $validatedData = $request->validate([
-            'name' => 'required|string|max:255',
-            'color' => 'required|string',
-        ]);
+        try {
+            $validatedData = $request->validate([
+                'name' => 'required|string|max:255',
+                'color' => 'required|string',
+            ]);
 
-        $category->name = $validatedData['name'];
-        $category->color = $validatedData['color'];
+            $category->name = $validatedData['name'];
+            $category->color = $validatedData['color'];
 
-        $category->save(); 
+            $category->save(); 
 
-        return redirect()->route('dashboard')
-                         ->with('success', 'Category has been updated successfully!');
+            Alert::success('Success', 'Category has been updated successfully!');
+
+            return redirect()->route('dashboard');
+        } catch (\Exception $e) {
+            throw $e;
+        }
+        
     }
 
     /**
@@ -87,9 +104,13 @@ class CategoryController extends Controller
      */
     public function destroy(Category $category)
     {
-        $category->delete();
-
-        return redirect()->route('categories.index')
-                         ->with('success', 'Category was deleted successfully!');
+        try {
+            $category->delete();
+    
+            Alert::success('Success', 'Category deleted successfully!');
+            return redirect()->route('categories.index');
+        } catch (\Exception $e) {
+            throw $e;
+        }
     }
 }

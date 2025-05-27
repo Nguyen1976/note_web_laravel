@@ -8,6 +8,7 @@ use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Redirect;
 use Illuminate\View\View;
+use RealRashid\SweetAlert\Facades\Alert;
 
 class ProfileController extends Controller
 {
@@ -26,15 +27,21 @@ class ProfileController extends Controller
      */
     public function update(ProfileUpdateRequest $request): RedirectResponse
     {
-        $request->user()->fill($request->validated());
-
-        if ($request->user()->isDirty('email')) {
-            $request->user()->email_verified_at = null;
+        try {
+            $request->user()->fill($request->validated());
+    
+            if ($request->user()->isDirty('email')) {
+                $request->user()->email_verified_at = null;
+            }
+    
+            $request->user()->save();
+    
+            Alert::success('Success', 'Profile updated successfully!');
+    
+            return Redirect::route('profile.edit')->with('status', 'profile-updated');
+        } catch (\Exception $e) {
+            throw $e; 
         }
-
-        $request->user()->save();
-
-        return Redirect::route('profile.edit')->with('status', 'profile-updated');
     }
 
     /**
@@ -42,19 +49,25 @@ class ProfileController extends Controller
      */
     public function destroy(Request $request): RedirectResponse
     {
-        $request->validateWithBag('userDeletion', [
-            'password' => ['required', 'current_password'],
-        ]);
-
-        $user = $request->user();
-
-        Auth::logout();
-
-        $user->delete();
-
-        $request->session()->invalidate();
-        $request->session()->regenerateToken();
-
-        return Redirect::to('/');
+        try {
+            $request->validateWithBag('userDeletion', [
+                'password' => ['required', 'current_password'],
+            ]);
+    
+            $user = $request->user();
+    
+            Auth::logout();
+    
+            $user->delete();
+    
+            $request->session()->invalidate();
+            $request->session()->regenerateToken();
+    
+            Alert::success('Success', 'Account deleted successfully!');
+    
+            return Redirect::to('/');
+        } catch (\Exception $e) {
+           throw $e;
+        }
     }
 }

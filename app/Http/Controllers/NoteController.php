@@ -7,6 +7,7 @@ use App\Models\Note;
 use App\Models\Reminder;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Http\Request;
+use RealRashid\SweetAlert\Facades\Alert;
 
 class NoteController extends Controller
 {
@@ -23,10 +24,14 @@ class NoteController extends Controller
      */
     public function create(Request $request)
     {   
-        $user = $request->user();
-        $categories = Category::where('user_id', $user->id)->get();
-        $reminders = Reminder::where('user_id', $user->id)->get();
-        return view('notes.create', compact('categories', 'reminders'));
+        try {
+            $user = $request->user();
+            $categories = Category::where('user_id', $user->id)->get();
+            $reminders = Reminder::where('user_id', $user->id)->get();
+            return view('notes.create', compact('categories', 'reminders'));
+        } catch (\Exception $e) {
+            throw $e; 
+        }
     }
 
     /**
@@ -34,25 +39,30 @@ class NoteController extends Controller
      */
     public function store(Request $request)
     {
-        $validatedData = $request->validate([
-            'title' => 'required|string|max:255',
-            'content' => 'required|string',
-            'category_id' => 'nullable|integer|exists:categories,id', 
-            'reminder_id' => 'nullable|integer|exists:reminders,id', 
-        ]);
-
-        $note = new Note();
-        $note->title = $validatedData['title'];
-        $note->content = $validatedData['content'];
-        $note->category_id = $validatedData['category_id'] ?? null;
-        $note->reminder_id = $validatedData['reminder_id'] ?? null;
-
-        $note->user_id = Auth::id();
-      
-
-        $note->save();
-        return redirect()->route('dashboard')
-                         ->with('success', 'Note created successfully!');
+        try {
+            $validatedData = $request->validate([
+                'title' => 'required|string|max:255',
+                'content' => 'required|string',
+                'category_id' => 'nullable|integer|exists:categories,id', 
+                'reminder_id' => 'nullable|integer|exists:reminders,id', 
+            ]);
+    
+            $note = new Note();
+            $note->title = $validatedData['title'];
+            $note->content = $validatedData['content'];
+            $note->category_id = $validatedData['category_id'] ?? null;
+            $note->reminder_id = $validatedData['reminder_id'] ?? null;
+    
+            $note->user_id = Auth::id();
+          
+    
+            $note->save();
+            Alert::success('success', 'Note created successfully!');
+    
+            return redirect()->route('dashboard');
+        } catch (\Exception $e) {
+            throw $e; 
+        }
     }
 
     /**
@@ -68,10 +78,14 @@ class NoteController extends Controller
      */
     public function edit(Note $note)
     {
-        $categories = Category::where('user_id', $note->user_id)->get();
-        $reminders = Reminder::where('user_id', $note->user_id)->get();
-        
-        return view('notes.edit', compact('note', 'categories', 'reminders'));
+        try {
+            $categories = Category::where('user_id', $note->user_id)->get();
+            $reminders = Reminder::where('user_id', $note->user_id)->get();
+            
+            return view('notes.edit', compact('note', 'categories', 'reminders'));
+        } catch (\Exception $e) {
+            throw $e; 
+        }
     }
 
     /**
@@ -79,28 +93,32 @@ class NoteController extends Controller
      */
     public function update(Request $request, Note $note)
     {
-        $validatedData = $request->validate([
-            'title' => [
-                'required',
-                'string',
-                'max:255'
-            ],
-            'content' => 'required|string',
-            'category_id' => 'nullable|integer|exists:categories,id',
-            'reminder_id' => 'nullable|integer|exists:reminders,id',
-        ]);
-
-        // 2. Cập nhật các thuộc tính của ghi chú
-        $note->title = $validatedData['title'];
-        $note->content = $validatedData['content'];
-        $note->category_id = $validatedData['category_id'];
-        $note->reminder_id = $validatedData['reminder_id'];
-
-        $note->save(); 
-
-     
-        return redirect()->route('dashboard')
-                         ->with('success', 'Note has been updated successfully!');
+        try {
+            $validatedData = $request->validate([
+                'title' => [
+                    'required',
+                    'string',
+                    'max:255'
+                ],
+                'content' => 'required|string',
+                'category_id' => 'nullable|integer|exists:categories,id',
+                'reminder_id' => 'nullable|integer|exists:reminders,id',
+            ]);
+    
+            // 2. Cập nhật các thuộc tính của ghi chú
+            $note->title = $validatedData['title'];
+            $note->content = $validatedData['content'];
+            $note->category_id = $validatedData['category_id'];
+            $note->reminder_id = $validatedData['reminder_id'];
+    
+            $note->save(); 
+    
+            Alert::success('Success', 'Note has been updated successfully!');
+         
+            return redirect()->route('dashboard');
+        } catch (\Exception $e) {
+            throw $e; 
+        }
     }
 
     /**
@@ -108,9 +126,14 @@ class NoteController extends Controller
      */
     public function destroy(Note $note)
     {
-        $note->delete();
-
-        return redirect()->route('dashboard')
-                         ->with('success', 'Note deleted successfully!');
+        try {
+            $note->delete();
+    
+            Alert::success('Success', 'Note deleted successfully!');
+    
+            return redirect()->route('dashboard');
+        } catch (\Exception $e) {
+            throw $e; 
+        }   
     }
 }

@@ -18,11 +18,15 @@
     <!-- Pickr JS -->
     <script src="https://cdn.jsdelivr.net/npm/@simonwep/pickr"></script>
 
+    <!-- Sweetalert2 CSS -->
+    <link href="https://cdn.jsdelivr.net/npm/sweetalert2@11/dist/sweetalert2.min.css" rel="stylesheet">
+
     <!-- Scripts -->
     @vite(['resources/css/app.css', 'resources/js/app.js'])
 </head>
 
 <body class="font-sans antialiased">
+
     <div class="min-h-screen bg-gray-100">
         @include('layouts.navigation')
 
@@ -41,18 +45,7 @@
         </main>
     </div>
 
-
-    @if (session('success'))
-        <script>
-            alert("{{ session('success') }}");
-        </script>
-    @endif
-
-    @if (session('error'))
-        <script>
-            alert("{{ session('error') }}");
-        </script>
-    @endif
+    @include('sweetalert::alert')
 </body>
 
 </html>
