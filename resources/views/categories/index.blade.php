@@ -1,5 +1,5 @@
 <x-app-layout>
-    <div class="container mx-auto px-4 py-8">
+    <div class="container mx-auto py-8 xl:px-36 sm:px-6 px-4 ">
         <h1 class="text-3xl font-bold text-center mb-8"> Categories Listing</h1>
 
         <!-- Search and Add User (Static) -->
@@ -56,7 +56,12 @@
                                             </svg>
                                         </button>
                                         <div class="relative z-10" aria-labelledby="modal-title" role="dialog"
-                                            aria-modal="true" x-show="showModal">
+                                            aria-modal="true" x-show="showModal" x-cloak
+                                            x-transition:enter="transition ease-out duration-300"
+                                            x-transition:enter-start="opacity-0" x-transition:enter-end="opacity-100"
+                                            x-transition:leave="transition ease-in duration-200"
+                                            x-transition:leave-start="opacity-100" x-transition:leave-end="opacity-0">
+
 
                                             <div class="fixed inset-0 bg-gray-500/75 transition-opacity"
                                                 aria-hidden="true">
@@ -87,7 +92,9 @@
                                                                         id="modal-title">
                                                                         Delete category?</h3>
                                                                     <div class="mt-2">
-                                                                        <p class="text-sm text-gray-500">Are you sure you want to delete this category? This action is permanent and cannot be undone.
+                                                                        <p class="text-sm text-gray-500">Are you sure
+                                                                            you want to delete this category? This
+                                                                            action is permanent and cannot be undone.
                                                                         </p>
                                                                     </div>
                                                                 </div>

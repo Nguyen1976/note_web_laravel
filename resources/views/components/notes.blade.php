@@ -1,7 +1,7 @@
-<div class="mx-auto container py-20 px-6">
+<div class="container py-20 xl:px-36 sm:px-6 px-6">
     <div class="grid sm:grid-cols-1 md:grid-cols-2 lg:grid-cols-4 xl:grid-cols-4 gap-6">
         @foreach ($notes as $note)
-            <div class="w-full h-64 flex flex-col justify-between bg-white rounded-lg border mb-6 py-5 px-4">
+            <div class="w-full h-64 flex flex-col justify-between bg-white rounded-lg border mb-6 py-5 px-4 ">
                 <div class="border-l-2 pl-3 ml-1"
                     style="border-color: {{ $note->category ? $note->category->color : 'black' }}; color: {{ $note->category ? $note->category->color : 'black' }}">
                     <h4 class="font-bold mb-3">{{ $note->title }}</h4>
@@ -41,7 +41,11 @@
                                     </svg>
                                 </button>
                                 <div class="relative z-10" aria-labelledby="modal-title" role="dialog"
-                                    aria-modal="true" x-show="showModal">
+                                    aria-modal="true" x-show="showModal" x-cloak
+                                    x-transition:enter="transition ease-out duration-300"
+                                    x-transition:enter-start="opacity-0" x-transition:enter-end="opacity-100"
+                                    x-transition:leave="transition ease-in duration-200"
+                                    x-transition:leave-start="opacity-100" x-transition:leave-end="opacity-0">
 
                                     <div class="fixed inset-0 bg-gray-500/75 transition-opacity" aria-hidden="true">
                                     </div>

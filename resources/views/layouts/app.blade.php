@@ -21,6 +21,10 @@
     <!-- Sweetalert2 CSS -->
     <link href="https://cdn.jsdelivr.net/npm/sweetalert2@11/dist/sweetalert2.min.css" rel="stylesheet">
 
+    <!-- Pace CSS (chọn theme nếu muốn) -->
+    <link href="https://cdn.jsdelivr.net/npm/pace-js@latest/themes/blue/pace-theme-flash.css" rel="stylesheet" />
+
+
     <!-- Scripts -->
     @vite(['resources/css/app.css', 'resources/js/app.js'])
 </head>
@@ -46,6 +50,8 @@
     </div>
 
     @include('sweetalert::alert')
+    <!-- Pace JS -->
+    <script src="https://cdn.jsdelivr.net/npm/pace-js@latest/pace.min.js"></script>
 </body>
 
 </html>
