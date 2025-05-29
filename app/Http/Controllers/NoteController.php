@@ -136,4 +136,21 @@ class NoteController extends Controller
             throw $e; 
         }   
     }
+
+    public function getNotesByCategory(Request $request, $id) {
+        $user = $request->user();
+        if($id == 'all') {
+            $notes = Note::where('user_id', $user->id)
+                     ->with('category')
+                     ->with('reminder')
+                     ->get();
+        } else {
+             $notes = Note::where('user_id', $user->id)
+                     ->where('category_id', $id)
+                     ->with('category')
+                     ->with('reminder')
+                     ->get();
+        }
+        return response()->json($notes);
+    }
 }

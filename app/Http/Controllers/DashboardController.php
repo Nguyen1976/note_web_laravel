@@ -18,28 +18,28 @@ class DashboardController extends Controller
     
             $categoryActive = null;
     
-            return view('dashboard', compact('categories', 'notes', 'categoryActive'));
+            return view('dashboard', compact('categories', 'notes'));
         } catch (\Exception $e) {
             throw $e; 
         }
     }
 
-    public function filterByCategory(Request $request, $id)
-    {
-        try {
-            $user = $request->user();
-            $categories = Category::where('user_id', $user->id)->get();
+    // public function filterByCategory(Request $request, $id)
+    // {
+    //     try {
+    //         $user = $request->user();
+    //         $categories = Category::where('user_id', $user->id)->get();
     
-            $notes = Note::where('user_id', $user->id)
-                        ->where('category_id', $id)
-                        ->with('category')
-                        ->with('reminder')
-                        ->get();
+    //         $notes = Note::where('user_id', $user->id)
+    //                     ->where('category_id', $id)
+    //                     ->with('category')
+    //                     ->with('reminder')
+    //                     ->get();
     
-            $categoryActive = $id;
-            return view('dashboard', compact('categories', 'notes', 'categoryActive'));
-        } catch (\Exception $e) {
-            throw $e; 
-        }
-    }
+    //         $categoryActive = $id;
+    //         return view('dashboard', compact('categories', 'notes', 'categoryActive'));
+    //     } catch (\Exception $e) {
+    //         throw $e; 
+    //     }
+    // }
 }

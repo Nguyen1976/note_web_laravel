@@ -6,7 +6,7 @@ use Illuminate\Foundation\Configuration\Middleware;
 use Illuminate\Support\Facades\Log;
 use RealRashid\SweetAlert\Facades\Alert;
 use Illuminate\Http\Request;
-use Throwable; 
+// use Throwable; 
 
 return Application::configure(basePath: dirname(__DIR__))
     ->withRouting(
@@ -27,7 +27,6 @@ return Application::configure(basePath: dirname(__DIR__))
             Log::error("Unhandled exception caught by renderable: " . $e->getMessage());
             Alert::error('Error', $genericDbErrorMessage);
     
-            return redirect()->route('dashboard');
+            return redirect()->route('login');
         });
-        
     })->create();
