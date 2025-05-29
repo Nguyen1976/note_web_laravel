@@ -33,6 +33,8 @@ Route::middleware('auth')->group(function () {
     Route::resource('categories', CategoryController::class);
     Route::resource('notes', NoteController::class);
     Route::resource('reminders', ReminderController::class);
+    // web.php hoặc api.php
+    Route::get('/notes/category/{id}', [NoteController::class, 'getNotesByCategory']);
 });
 
 //Begin: send email while login
