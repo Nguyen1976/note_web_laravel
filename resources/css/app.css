@@ -2,6 +2,7 @@
 @tailwind components;
 @tailwind utilities;
 
+
 /*Handle bug of alpineJS*/
 [x-cloak] {
     display: none !important;

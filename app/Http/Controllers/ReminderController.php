@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use App\Models\Note;
 use App\Models\Reminder;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
@@ -26,9 +27,15 @@ class ReminderController extends Controller
     /**
      * Show the form for creating a new resource.
      */
-    public function create()
+    public function create(Request $request)
     {
-        return view('reminders.create');
+        //Get note by user
+        $user = $request->user();
+
+        $notes = $user->notes()->with('category')->get();
+        return view('reminders.create', [
+            'notes' => $notes,
+        ]);
     }
 
     /**
@@ -39,6 +46,8 @@ class ReminderController extends Controller
         try {
             $validatedData = $request->validate([
                 'reminder_at' => 'required|date',
+                 'note_id' => 'nullable|array',
+                 'note_id.*' => 'exists:notes,id',
             ]);
     
     
@@ -48,6 +57,16 @@ class ReminderController extends Controller
             $reminder->user_id = Auth::id();
     
             $reminder->save();
+
+            if (!empty($validatedData['note_id'])) {
+                foreach ($validatedData['note_id'] as $noteId) {
+                    $note = Note::find($noteId);
+                    if ($note) {
+                        $note->reminder_id = $reminder->id;
+                        $note->save();
+                    }
+                }
+            }
     
             Alert::success('Success', 'Reminder created successfully!');
             return redirect()->route('reminders.index');
@@ -67,9 +86,12 @@ class ReminderController extends Controller
     /**
      * Show the form for editing the specified resource.
      */
-    public function edit(Reminder $reminder)
+    public function edit(Request $request, Reminder $reminder)
     {
-        return view('reminders.edit', compact('reminder'));
+        $user = $request->user();
+
+        $notes = $user->notes()->with('category')->get();
+        return view('reminders.edit', compact('reminder', 'notes'));
     }
 
     /**
@@ -79,12 +101,28 @@ class ReminderController extends Controller
     {
         try {
             $validatedData = $request->validate([
-               'reminder_at' => 'required|date',
-           ]);
+                'reminder_at' => 'required|date',
+                 'note_id' => 'nullable|array',
+                 'note_id.*' => 'exists:notes,id',
+                  'sent' => 'nullable|boolean'
+            ]);
     
            $reminder->reminder_at = $validatedData['reminder_at'];
+
+            $reminder->sent = $request->has('sent');
+
+           if (!empty($validatedData['note_id'])) {
+                foreach ($validatedData['note_id'] as $noteId) {
+                    $note = Note::find($noteId);
+                    if ($note) {
+                        $note->reminder_id = $reminder->id;
+                        $note->save();
+                    }
+                }
+            }
     
            $reminder->save(); 
+
     
            Alert::success('Success', 'Reminder updated successfully!');
            return redirect()->route('reminders.index');

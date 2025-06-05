@@ -2,8 +2,10 @@
 Giới thiệu:
 
 # Sơ đồ khối
+![SQL diagram](./images/ERD.png)
 
 ## Sơ đồ chức năng
+![UML]()
 
 Class Diagram of Objects
 

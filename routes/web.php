@@ -20,9 +20,9 @@ Route::get('/dashboard', [DashboardController::class, 'index'])
     ->middleware(['auth', 'verified'])
     ->name('dashboard');
 
-Route::get('/dashboard/category/{id}', [DashboardController::class, 'filterByCategory'])
-    ->middleware(['auth', 'verified'])
-    ->name('dashboard.category');
+// Route::get('/dashboard/category/{id}', [DashboardController::class, 'filterByCategory'])
+//     ->middleware(['auth', 'verified'])
+//     ->name('dashboard.category');
 
 
 Route::middleware('auth')->group(function () {
@@ -33,7 +33,8 @@ Route::middleware('auth')->group(function () {
     Route::resource('categories', CategoryController::class);
     Route::resource('notes', NoteController::class);
     Route::resource('reminders', ReminderController::class);
-    // web.php hoặc api.php
+
+    // api
     Route::get('/notes/category/{id}', [NoteController::class, 'getNotesByCategory']);
 });
 
