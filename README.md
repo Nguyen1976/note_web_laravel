@@ -5,32 +5,72 @@
 👤 **Họ tên:** Nguyễn Hà Nguyên  
 🎓 **Mã sinh viên:** 23010310
 
+## 📝 Mô tả dự án
+
+Website quản lý công việc cá nhân, cho phép người dùng tạo ghi chú, phân loại, đặt nhắc nhở và gửi email thông báo tự động.  
+Dự án sử dụng Laravel, MySQL, và tích hợp hệ thống gửi mail định kỳ.
+
+## 🧰 Công nghệ sử dụng
+- PHP (Laravel Framework)
+- AJAX (Asynchronous JavaScript and XML)
+- Laravel Breeze
+- MySQL (Aiven Cloud)
+- Blade Template
+- Tailwind CSS (do Breeze tích hợp sẵn)
+- Laravel Scheduler
+- Laravel Alert (SweetAlert)
+
+## 🚀 Cài đặt & Chạy thử
+
+```bash
+git https://github.com/Nguyen1976/note_web_laravel
+cd ./folder-project
+composer install
+npm i
+cp .env.example .env
+php artisan key:generate
+php artisan migrate
+```
+
+<p>
+Hãy tạo 1 server SQL trên aiven để có thể dùng trong dự án hoặc tự tạo 1 server với xampp hoặc docker trên máy tính cá nhân của bạn  
+</p>
+<strong>
+Sau dó chạy 3 câu lệnh ở 3 terminal khác nhau
+</strong>
+
+```bash
+php artisan serve
+npm run dev
+php artisan schedule:work
+```
+
 # Sơ đồ khối
 
 ![SQL diagram](./documents/images/diagrams/ERD.png)
 
-## Sơ đồ chức năng
+## ⚙️Sơ đồ chức năng
 
 ![UML](./documents/images/diagrams/uml.png)
 
-## Sơ đồ thuật toán
+## 🧠Sơ đồ thuật toán
 
-Dasboard
+<strong>Dasboard</strong>
 ![Dashboard-diagram](./documents/images/diagrams/dashboard-diagrams.png)
 
-Centralized error handling
+<strong>Centralized error handling</strong>
 ![Centralized-error-handling](./documents/images/diagrams/centralized-error-handling.drawio.png)
 
-Send note reminders via email
+<strong>Send note reminders via email</strong>
 ![Send-note-reminders-via-email](./documents/images/diagrams/scheduled-task-send-note-reminders.drawio.png)
 
-CRUD Note
+<strong>CRUD Note</strong>
 ![Note-diagram](./documents/images/diagrams/note-diagram.drawio.png)
 
-CRUD Category  
+<strong>CRUD Category  </strong>
 ![Category-diagram](./documents/images/diagrams/category-diagram.drawio.png)
 
-CRUD Reminder
+<strong>CRUD Reminder</strong>
 ![Reminder-diagram](./documents/images/diagrams/reminder-diagram.drawio.png)
 
 <!--
@@ -47,7 +87,7 @@ Authentication/Authorisation -->
 
 ## Model
 
-Note Model
+<strong>Note Model</strong>
 
 ```php
 class Note extends Model
@@ -72,7 +112,8 @@ class Note extends Model
 
 ```
 
-Category Model
+
+<strong>Category Model</strong>
 
 ```php
 class Category extends Model
@@ -92,7 +133,7 @@ class Category extends Model
 
 ```
 
-Reminder Model
+<strong>Reminder Model</strong>
 
 ```php
 class Reminder extends Model
@@ -118,7 +159,7 @@ class Reminder extends Model
 
 ## Controller
 
-Note Controller
+<strong>Note Controller</strong>
 
 ```php
     //Read
@@ -214,7 +255,7 @@ Note Controller
     }
 ```
 
-Category Controller
+<strong>Category Controller</strong>
 
 ```php
     //Read
@@ -288,7 +329,7 @@ Category Controller
     }
 ```
 
-Reminder Controller
+<strong>Reminder Controller</strong>
 
 ```php
     //Read
@@ -388,7 +429,7 @@ Reminder Controller
     }
 ```
 
-SendNoteReminder
+<strong>SendNoteReminder</strong>
 
 ```php
     file:app/console/Commands/SendNoteReminders.php
@@ -473,36 +514,56 @@ SendNoteReminder
 
 # Security Setup
 
-Sử dụng @csrf để chống tấn công CSRF
-Ví dụ: file reminder/create.blade.php
-![csrf-example](./documents/images/security/csrf.png)
+<strong>
+    Sử dụng @csrf để chống tấn công CSRF
+    Ví dụ: file reminder/create.blade.php
+</strong>
 
-Chống tấn công XSS  
-Ví dụ: file reminder/index.blade.php
+![csrf-example](./documents/images/security/csrf.png)
+<strong>
+    Chống tấn công XSS  
+    Ví dụ: file reminder/index.blade.php
+</strong>
+
 ![XSS](./documents/images/security/xss.png)
 
-Validation Ràng buộc dữ liệu giúp ngăn chặn các input độc hại
-Ví dụ method NoteController@store
+<strong>
+    Validation Ràng buộc dữ liệu giúp ngăn chặn các input độc hại
+    Ví dụ method NoteController@store
+</strong>
+
 ![Validation](./documents/images/security/validation.png)
 
-Query Builder Protection chống SQL Injection
-Ví dụ method DashboardController@index
+<strong>
+    Query Builder Protection chống SQL Injection
+    Ví dụ method DashboardController@index
+</strong>
+
 ![SQL-inject](./documents/images/security/SQLinject.png)
 
-Middleware bảo mật
-Xử dụng các middleware auth, verified, throttle của laravel
-Ví dụ: file routes/web.php
+<strong>
+    Middleware bảo mật
+    Xử dụng các middleware auth, verified, throttle của laravel
+    Ví dụ: file routes/web.php
+</strong>
+
 ![Middleware-1](./documents/images/security/middleware.png)
 ![Middleware-2](./documents/images/security/middleware-2.png)
 
-Authorization
-Ví dụ: Sử dụng Gate để authorization người dùng chỉ được update đúng note của họ
+<strong>
+    Authorization
+    Ví dụ: Sử dụng Gate để authorization người dùng chỉ được update đúng note của họ
 method: NoteController@update
+</strong>
+
 ![Authentication](./documents/images/security/authorize.png)
 
-Authentication
-Ví dụ: Sử dụng Auth() để lấy thông tin user 1 cách an toàn
-method:CategoryController@store
+<strong>
+    Authentication
+    Ví dụ: Sử dụng Auth() để lấy thông tin user 1 cách an toàn
+    method:CategoryController@store
+</strong>
+
 ![Authentication](./documents/images/security/authentication.png)
 
 # Link
@@ -527,13 +588,16 @@ method:CategoryController@store
 
 ## Xác thực người dùng <\<Breeze>\>
 
-Trang đăng nhập
+<strong>Trang đăng nhập</strong>
+
 ![Register](./documents/images/mainFeatures/sign-in.png)
 
-Trang đăng ký
+<strong>Trang đăng ký</strong>
+
 ![Register](./documents/images/mainFeatures/register.png)
 
-Gửi mail yêu cầu người dùng verified
+<strong>Gửi mail yêu cầu người dùng verified</strong>
+
 ![required-veryfied-email](./documents/images/mainFeatures/verified-email.png)
 ![required-veryfied-email](./documents/images/mainFeatures/email-verify.png)
 
@@ -541,54 +605,68 @@ Gửi mail yêu cầu người dùng verified
 
 ![dashboard](./documents/images/mainFeatures/dashboard.png)
 
-Lọc note theo category
+<strong>Lọc note theo category</strong>
+
 ![filter-note-by-category](./documents/images/mainFeatures/filter-note-by-category.png)
 
 ## CRUD Note
 
-Create Note
+<strong>Create Note</strong>
+
 ![create-note](./documents/images/mainFeatures/create-note.png)
 
-Delete and update note
+<strong>Delete and update note</strong>
+
 ![delete-note](./documents/images/mainFeatures/delete-and-update-note.png)
 
-Trang update
+<strong>Trang update</strong>
+
 ![update-note-page](./documents/images/mainFeatures/update-note-page.png)
 
 ## CRUD Category
 
-Trang chính
+<strong>Trang chính</strong>
+
 ![category-page](./documents/images/mainFeatures/category-page.png)
 
-Create Category
+<strong>Create Category</strong>
+
 ![create-category-page](./documents/images/mainFeatures/create-category-page.png)
 
-Delete and update category
+<strong>Delete and update category</strong>
+
 ![update-and-delete-category](./documents/images/mainFeatures/update-and-delete-category.png)
 
-Trang update
+<strong>Trang update</strong>
+
 ![update-category-page](./documents/images/mainFeatures/update-category-page.png)
 
 ## CRUD Reminder
 
-Trang chính
+<strong>Trang chính</strong>
 ![reminder-page](./documents/images/mainFeatures/reminder-page.png)
 
-Create Reminder
+<strong>Create Reminder</strong>
+
 ![create-reminder-page](./documents/images/mainFeatures/create-reminder-page.png)
 
-Delete and update reminder
+<strong>Delete and update reminder</strong>
+
 ![update-and-delete-category](./documents/images/mainFeatures/update-amd-delete-reminder.png)
 
-Trang update
+<strong>Trang update</strong>
+
 ![update-category-page](./documents/images/mainFeatures/update-reminder-page.png)
 
-Gán reminder cho note để tạo nhắc nhớ cho note đó
+<strong>Gán reminder cho note để tạo nhắc nhớ cho note đó</strong>
+
 ![assign-reminder-to--note](./documents/images/mainFeatures/assign-reminder-to--note.png)
-hoặc  
+<strong>hoặc  </strong>
+
 ![assign-note-to-reminder](./documents/images/mainFeatures/assign-note-to-reminder.png)
 
-Khi một note được gán reminder mà đến thời gian reminder được nhắc nhở thì sẽ gửi mail nhắc nhở người dùng những note đến hạn  
+<strong>Khi một note được gán reminder mà đến thời gian reminder được nhắc nhở thì sẽ gửi mail nhắc nhở người dùng những note đến hạn  </strong>
+
 ![assign-note-to-reminder](./documents/images/mainFeatures/reminder-note-by-email.png)
 
 # License & Copy Rights
