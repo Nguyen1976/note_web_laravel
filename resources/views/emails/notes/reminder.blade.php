@@ -117,7 +117,7 @@
                     <tr>
                         <td
                             style="background-color: #e2e8f0; padding: 20px 25px; text-align: center; font-family: Arial, sans-serif; font-size: 12px; line-height: 1.5; color: #718096;">
-                            <p style="margin: 0 0 5px 0;">&copy; {{ date('Y') }} [Tên Ứng Dụng Của Bạn]. Bảo lưu
+                            <p style="margin: 0 0 5px 0;">&copy; {{ date('Y') }} Note-web-laravel. Bảo lưu
                                 mọi
                                 quyền.</p>
                             <p style="margin: 0;">

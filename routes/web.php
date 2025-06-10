@@ -25,7 +25,7 @@ Route::get('/dashboard', [DashboardController::class, 'index'])
 //     ->name('dashboard.category');
 
 
-Route::middleware('auth')->group(function () {
+Route::middleware('auth', 'verified')->group(function () {
     Route::get('/profile', [ProfileController::class, 'edit'])->name('profile.edit');
     Route::patch('/profile', [ProfileController::class, 'update'])->name('profile.update');
     Route::delete('/profile', [ProfileController::class, 'destroy'])->name('profile.destroy');
@@ -51,18 +51,18 @@ Route::get('/email/verify/{id}/{hash}', function (EmailVerificationRequest $requ
 Route::post('/email/verification-notification', function (Request $request) {
     $request->user()->sendEmailVerificationNotification();
     return back()->with('message', 'Đã gửi lại email xác minh!');
-})->middleware(['auth', 'throttle:6,1'])->name('verification.send');
+})->middleware(['auth', 'throttle:6,1'])->name('verification.send');//Giới hạn 6 lượt gửi mỗi phút
 //End
 require __DIR__.'/auth.php';
 
 
 
 //Test xử lý lỗi tập trung
-// Route::get('/test-model-not-found', function () {
-//     try {
-//         $note = Note::findOrFail(999999); 
-//         return "Tìm thấy ghi chú: " . $note->title;
-//     } catch (\Exception $e) {
-//         throw $e; 
-//     }
-// });
+Route::get('/test-model-not-found', function () {
+    try {
+        $note = Note::findOrFail(999999); 
+        return "Tìm thấy ghi chú: " . $note->title;
+    } catch (\Exception $e) {
+        throw $e; 
+    }
+});
