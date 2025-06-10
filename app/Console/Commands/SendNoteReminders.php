@@ -57,7 +57,6 @@ class SendNoteReminders extends Command
 
             if ($allNotesForThisReminder->isEmpty()) {
                 Log::info("SendNoteReminders Command: Reminder ID {$reminder->id} không có notes nào để gửi cho User ID {$userToSendTo->id}. Đánh dấu là đã xử lý.");
-                $reminder->save();
                 continue; // Chuyển sang reminder tiếp theo
             }
 
@@ -71,6 +70,11 @@ class SendNoteReminders extends Command
             if ($emailSentSuccessfully) {
                 $reminder->sent = true; // Đánh dấu là đã gửi email thành công
                 $reminder->save();
+
+                foreach ($allNotesForThisReminder as $note) {
+                    $note->reminder_id = null;
+                    $note->save();
+                }
             } else {
                 Log::error("SendNoteReminders Command: Có lỗi xảy ra khi gửi email cho Reminder ID: {$reminder->id}. Nhắc nhở này sẽ được thử lại lần sau.");
             }

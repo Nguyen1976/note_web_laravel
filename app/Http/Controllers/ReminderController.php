@@ -102,9 +102,9 @@ class ReminderController extends Controller
         try {
             $validatedData = $request->validate([
                 'reminder_at' => 'required|date',
-                 'note_id' => 'nullable|array',
-                 'note_id.*' => 'exists:notes,id',
-                  'sent' => 'nullable|boolean'
+                'note_id' => 'nullable|array',
+                'note_id.*' => 'exists:notes,id',
+                'sent' => 'nullable|boolean'
             ]);
     
            $reminder->reminder_at = $validatedData['reminder_at'];
@@ -129,13 +129,12 @@ class ReminderController extends Controller
         } catch (\Exception $e) {
             throw $e;
         }
-
     }
 
     /**
      * Remove the specified resource from storage.
      */
-   public function destroy(Reminder $reminder)
+    public function destroy(Reminder $reminder)
     {
         try {
             $reminder->delete();

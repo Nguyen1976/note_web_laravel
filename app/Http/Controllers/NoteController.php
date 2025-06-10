@@ -137,7 +137,7 @@ class NoteController extends Controller
         }   
     }
 
-    public function getNotesByCategory(Request $request, $id) {
+    public function getNotesByCategory(Request $request, $id) {//api
         $user = $request->user();
         if($id == 'all') {
             $notes = Note::where('user_id', $user->id)

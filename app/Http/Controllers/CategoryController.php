@@ -21,13 +21,12 @@ class CategoryController extends Controller
         } catch (\Exception $e) {
             throw $e;
         }
-        
     }
 
     /**
      * Show the form for creating a new resource.
      */
-   public function create()
+    public function create()
     {   
         return view('categories.create');
     }
@@ -55,7 +54,6 @@ class CategoryController extends Controller
         } catch (\Exception $e) {
             throw $e;
         }
-        
     }
 
     /**
@@ -92,11 +90,10 @@ class CategoryController extends Controller
 
             Alert::success('Success', 'Category has been updated successfully!');
 
-            return redirect()->route('dashboard');
+            return redirect()->route('categories.index');
         } catch (\Exception $e) {
             throw $e;
         }
-        
     }
 
     /**
