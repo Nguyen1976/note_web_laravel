@@ -388,9 +388,7 @@ Reminder Controller
     }
 ```
 
-## View
-
-## SendNoteReminder
+SendNoteReminder
 
 ```php
     file:app/console/Commands/SendNoteReminders.php
@@ -471,6 +469,8 @@ Reminder Controller
 }
 ```
 
+## View
+
 # Security Setup
 
 Sử dụng @csrf để chống tấn công CSRF
@@ -489,11 +489,21 @@ Query Builder Protection chống SQL Injection
 Ví dụ method DashboardController@index
 ![SQL-inject](./documents/images/security/SQLinject.png)
 
-Middleware bảo mật 
+Middleware bảo mật
 Xử dụng các middleware auth, verified, throttle của laravel
 Ví dụ: file routes/web.php
 ![Middleware-1](./documents/images/security/middleware.png)
 ![Middleware-2](./documents/images/security/middleware-2.png)
+
+Authorization
+Ví dụ: Sử dụng Gate để authorization người dùng chỉ được update đúng note của họ
+method: NoteController@update
+![Authentication](./documents/images/security/authorize.png)
+
+Authentication
+Ví dụ: Sử dụng Auth() để lấy thông tin user 1 cách an toàn
+method:CategoryController@store
+![Authentication](./documents/images/security/authentication.png)
 
 # Link
 
