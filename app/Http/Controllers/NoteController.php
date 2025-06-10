@@ -7,6 +7,7 @@ use App\Models\Note;
 use App\Models\Reminder;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Gate;
 use RealRashid\SweetAlert\Facades\Alert;
 
 class NoteController extends Controller
@@ -94,6 +95,8 @@ class NoteController extends Controller
     public function update(Request $request, Note $note)
     {
         try {
+            Gate::authorize('update-note', $note);
+
             $validatedData = $request->validate([
                 'title' => [
                     'required',
