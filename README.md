@@ -1,4 +1,4 @@
-<h1 align="center"><strong>Project: Website quản lý công việc</strong></h1>
+<h1 align="center"><strong>Project: Website quản lý công việc</strong>  </h1>
 
 <h2>Thông tin cá nhân</h2>
 
@@ -11,14 +11,15 @@ Website quản lý công việc cá nhân, cho phép người dùng tạo ghi ch
 Dự án sử dụng Laravel, MySQL, và tích hợp hệ thống gửi mail định kỳ.
 
 ## 🧰 Công nghệ sử dụng
-- PHP (Laravel Framework)
-- AJAX (Asynchronous JavaScript and XML)
-- Laravel Breeze
-- MySQL (Aiven Cloud)
-- Blade Template
-- Tailwind CSS (do Breeze tích hợp sẵn)
-- Laravel Scheduler
-- Laravel Alert (SweetAlert)
+
+-   PHP (Laravel Framework)
+-   AJAX (Asynchronous JavaScript and XML)
+-   Laravel Breeze
+-   MySQL (Aiven Cloud)
+-   Blade Template
+-   Tailwind CSS (do Breeze tích hợp sẵn)
+-   Laravel Scheduler
+-   Laravel Alert (SweetAlert)
 
 ## 🚀 Cài đặt & Chạy thử
 
@@ -55,22 +56,22 @@ php artisan schedule:work
 
 ## 🧠Sơ đồ thuật toán
 
-<strong>Dasboard</strong>
+<strong>Dasboard</strong>  
 ![Dashboard-diagram](./documents/images/diagrams/dashboard-diagrams.png)
 
-<strong>Centralized error handling</strong>
+<strong>Centralized error handling</strong>  
 ![Centralized-error-handling](./documents/images/diagrams/centralized-error-handling.drawio.png)
 
-<strong>Send note reminders via email</strong>
+<strong>Send note reminders via email</strong>  
 ![Send-note-reminders-via-email](./documents/images/diagrams/scheduled-task-send-note-reminders.drawio.png)
 
-<strong>CRUD Note</strong>
+<strong>CRUD Note</strong>  
 ![Note-diagram](./documents/images/diagrams/note-diagram.drawio.png)
 
-<strong>CRUD Category  </strong>
+<strong>CRUD Category </strong>  
 ![Category-diagram](./documents/images/diagrams/category-diagram.drawio.png)
 
-<strong>CRUD Reminder</strong>
+<strong>CRUD Reminder</strong>  
 ![Reminder-diagram](./documents/images/diagrams/reminder-diagram.drawio.png)
 
 <!--
@@ -111,7 +112,6 @@ class Note extends Model
 }
 
 ```
-
 
 <strong>Category Model</strong>
 
@@ -520,6 +520,7 @@ class Reminder extends Model
 </strong>
 
 ![csrf-example](./documents/images/security/csrf.png)
+
 <strong>
     Chống tấn công XSS  
     Ví dụ: file reminder/index.blade.php
@@ -547,7 +548,7 @@ class Reminder extends Model
     Ví dụ: file routes/web.php
 </strong>
 
-![Middleware-1](./documents/images/security/middleware.png)
+![Middleware-1](./documents/images/security/middleware.png)  
 ![Middleware-2](./documents/images/security/middleware-2.png)
 
 <strong>
@@ -643,7 +644,7 @@ method: NoteController@update
 
 ## CRUD Reminder
 
-<strong>Trang chính</strong>
+<strong>Trang chính</strong>  
 ![reminder-page](./documents/images/mainFeatures/reminder-page.png)
 
 <strong>Create Reminder</strong>
@@ -661,11 +662,11 @@ method: NoteController@update
 <strong>Gán reminder cho note để tạo nhắc nhớ cho note đó</strong>
 
 ![assign-reminder-to--note](./documents/images/mainFeatures/assign-reminder-to--note.png)
-<strong>hoặc  </strong>
+<strong>hoặc </strong>
 
 ![assign-note-to-reminder](./documents/images/mainFeatures/assign-note-to-reminder.png)
 
-<strong>Khi một note được gán reminder mà đến thời gian reminder được nhắc nhở thì sẽ gửi mail nhắc nhở người dùng những note đến hạn  </strong>
+<strong>Khi một note được gán reminder mà đến thời gian reminder được nhắc nhở thì sẽ gửi mail nhắc nhở người dùng những note đến hạn </strong>
 
 ![assign-note-to-reminder](./documents/images/mainFeatures/reminder-note-by-email.png)
 
