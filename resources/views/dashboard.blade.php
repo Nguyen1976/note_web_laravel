@@ -8,7 +8,6 @@
                 <button class="mr-2 text-white bg-blue-500 py-2 px-3 rounded-full">
                     <a href="{{ route('notes.create') }}">
                         Add Note
-
                     </a>
                 </button>
             </div>
@@ -40,7 +39,7 @@
     </div>
 </x-app-layout>
 <script>
-    document.addEventListener('DOMContentLoaded', function() { // Đảm bảo DOM đã tải
+    document.addEventListener('DOMContentLoaded', function() { 
         const categoryItems = document.querySelectorAll('.category-item');
         const notesContainer = document.getElementById('notes-container');
         const csrfToken = document.querySelector('meta[name="csrf-token"]')?.getAttribute(
@@ -53,19 +52,18 @@
 
                 item.style.backgroundColor = isSelected ? color : 'transparent';
                 item.style.color = isSelected ? 'white' :
-                    color; // Giả sử màu chữ mặc định là màu của category
-                // Hoặc bạn có thể đặt màu chữ mặc định khác
-                if (!isSelected && !item.style.color) { // Nếu màu category rỗng, đặt màu chữ mặc định
-                    item.style.color = '#333'; // Ví dụ màu xám đậm
+                    color; 
+                if (!isSelected && !item.style.color) {
+                    item.style.color = '#333'; 
                 }
             });
         }
 
         function displayNotes(notesData) {
-            let html = ''; // Sử dụng let thay vì const
+            let html = '';
             (notesData || []).forEach(note => {
                 const categoryColor = note.category ? note.category.color :
-                    '#333333'; // Màu mặc định nếu không có category
+                    '#333333'; 
                 const reminderHtml = note.reminder ? `
                 <div class="border border-gray-300 rounded-full px-3 py-1 text-xs flex items-center"
                      aria-label="due on" role="contentinfo"
@@ -93,7 +91,7 @@
                     <div class="flex items-center justify-between" style="color: ${categoryColor}">
                         <p class="text-xs">
                             ${new Date(note.created_at).toLocaleString('en-US', {
-                                month: 'short', day: 'numeric', year: 'numeric'//, hour: '2-digit', minute: '2-digit'
+                                month: 'short', day: 'numeric', year: 'numeric'
                             })}
                         </p>
                         <div class="flex items-center justify-center gap-3">
@@ -200,7 +198,6 @@
             });
         });
 
-        // Tự động click vào category đầu tiên (hoặc 'All Notes') khi trang tải xong
         const firstCategoryItem = document.querySelector('.category-item[data-id="all"]') || document
             .querySelector('.category-item');
         if (firstCategoryItem) {

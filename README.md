@@ -512,6 +512,31 @@ class Reminder extends Model
 
 ## View
 
+<strong>
+    Cấu trúc chính của view
+</strong>
+
+![Structure-view](./documents/images/views/view-structure.png)
+
+<strong>
+    Sử dụng thư viện Tailwind CSS để viết các style trực tiếp trong class mà không cần viết CSS thuần
+</strong>
+
+![tailwind1](./documents/images/views/tailwind.png)
+<strong>
+    Ví dụ: file /resources/views/dashboard.blade.php
+</strong>
+
+![tailwind2](./documents/images/views/tailwind2.png)
+
+
+<strong>
+    Sử dụng kĩ thuật AJAX trong javascript để lọc ra các note theo category mà không phải load lại toàn bộ trang<br>
+    Ví dụ: file /resources/views/dashboard.blade.php
+</strong>
+
+![AJAX](./documents/images/views/ajax.png)
+
 # Security Setup
 
 <strong>
@@ -528,15 +553,20 @@ class Reminder extends Model
 
 ![XSS](./documents/images/security/xss.png)
 
+<strong>Trường hợp không xử dụng {{}} của laravel các dữ liệu của chúng ta sẽ không được bảo vệ  </strong>
+
+![XSS2](./documents/images/security/xss2.png)
+
 <strong>
-    Validation Ràng buộc dữ liệu giúp ngăn chặn các input độc hại
+    Validation Ràng buộc dữ liệu giúp ngăn chặn các input độc hại<br>
     Ví dụ method NoteController@store
 </strong>
 
 ![Validation](./documents/images/security/validation.png)
 
 <strong>
-    Query Builder Protection chống SQL Injection
+    Query Builder Protection chống SQL Injection<br>
+    Sử dụng các query builder method có sẵn trong laravel thay vì các câu lệnh query sql thuần túy<br>
     Ví dụ method DashboardController@index
 </strong>
 
@@ -557,7 +587,7 @@ class Reminder extends Model
 method: NoteController@update
 </strong>
 
-![Authentication](./documents/images/security/authorize.png)
+![Authorization](./documents/images/security/authorize.png)
 
 <strong>
     Authentication
@@ -566,6 +596,13 @@ method: NoteController@update
 </strong>
 
 ![Authentication](./documents/images/security/authentication.png)
+
+<strong>
+    Luôn sử dụng phiên bản Laravel mới nhất để đảm bảo ứng dụng nhận được các bản vá bảo mật, cải tiến hiệu năng và các tính năng mới nhất từ cộng đồng phát triển
+</strong>
+
+![Library](./documents/images/security/library.png)
+
 
 # Link
 
