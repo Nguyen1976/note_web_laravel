@@ -31,7 +31,7 @@
                 </div>
                 <div class="hidden md:block">
                     <button type="button" class=" py-3 px-8 text-sm bg-teal-500 hover:bg-teal-600 rounded text-white ">
-                        <a href="{{ route('dashboard') }}">Start Free
+                        <a href="/register">Start Free
                             Trial</a>
                     </button>
                 </div>
@@ -52,7 +52,7 @@
                         </p>
                         <p class="mt-8 md:mt-12">
                             <button type="button" class=" py-4 px-12 bg-teal-500 hover:bg-teal-600 rounded text-white">
-                                <a href="{{ route('dashboard') }}">Get Started</a>
+                                <a href="/register">Get Started</a>
                             </button>
                         </p>
                     </div>
@@ -461,7 +461,8 @@
                             <div class="p-12 rounded-lg border border-solid border-gray-200 mb-8"
                                 style="box-shadow:0 10px 28px rgba(0,0,0,.08)">
                                 <p class="text-xl font-semibold">The best note-taking tool I've ever used!</p>
-                                <p class="mt-6">NoteApp changed how I organize my life. Categories, reminders, and
+                                <p class="mt-6">NoteApp changed how I organize my life. 
+                                    Categories, reminders, and
                                     email alerts are exactly what I needed.
                                 </p>
                                 <div class="flex items-center mt-8"><img class="w-12 h-12 mr-4 rounded-full"
@@ -525,7 +526,7 @@
                 <p class="mt-8">
                     <button type="button"
                         class=" py-5 px-16 text-lg bg-teal-500 hover:bg-teal-600 rounded text-white ">
-                        <a href="{{ route('dashboard') }}">Get Started
+                        <a href="/register">Get Started
                             Now</a>
                     </button>
                 </p>
