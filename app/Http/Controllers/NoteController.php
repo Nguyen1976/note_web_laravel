@@ -42,8 +42,8 @@ class NoteController extends Controller
     {
         try {
             $validatedData = $request->validate([
-                'title' => 'required|string|max:255',
-                'content' => 'required|string',
+                'title' => 'required|string|min:5|max:255',
+                'content' => 'required|string|min:10|max:1000',
                 'category_id' => 'nullable|integer|exists:categories,id', 
                 'reminder_id' => 'nullable|integer|exists:reminders,id', 
             ]);
@@ -98,12 +98,8 @@ class NoteController extends Controller
             Gate::authorize('update-note', $note);
 
             $validatedData = $request->validate([
-                'title' => [
-                    'required',
-                    'string',
-                    'max:255'
-                ],
-                'content' => 'required|string',
+                'title' => 'required|string|min:5|max:255',
+                'content' => 'required|string|min:10|max:1000',
                 'category_id' => 'nullable|integer|exists:categories,id',
                 'reminder_id' => 'nullable|integer|exists:reminders,id',
             ]);

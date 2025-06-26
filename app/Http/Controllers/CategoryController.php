@@ -38,7 +38,7 @@ class CategoryController extends Controller
     {
         try {
             $validatedData = $request->validate([
-                'name' => 'required|string|max:255',
+                'name' => 'required|string|max:255|min:3',
                 'color' => 'required|string',
             ]);
 
@@ -79,7 +79,7 @@ class CategoryController extends Controller
     {
         try {
             $validatedData = $request->validate([
-                'name' => 'required|string|max:255',
+                'name' => 'required|string|max:255|min:3',
                 'color' => 'required|string',
             ]);
 
